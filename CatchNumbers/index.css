@@ -1,0 +1,19 @@
+body {
+  background-color: #303030;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 5px;
+  padding: 5px;
+  margin: auto;
+}
+
+.grid-item {
+  padding: 5px;
+  background-color: lightblue;
+  text-align: center;
+  min-height: 25px;
+  min-width: 25px;
+}
