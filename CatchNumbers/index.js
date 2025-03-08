@@ -5,23 +5,22 @@ var gridNr = [];
 const gridWidth = 15;
 const gridHeight = 15;
 
-const currPlayer = new Player(gridHeight, gridWidth);
+const player = new Player(gridHeight, gridWidth);
 
 function showGridNr() {
   const gridContainer = document.getElementById("gridContainer");
   gridContainer.innerHTML = ""; // clear
 
   // create grid for content - rows and columns are defined in style
-  for (let i = 0; i < gridHeight; i++) {
-    for (let j = 0; j < gridWidth; j++) {
-      var pos = gridHeight * i + j;
-      const element = gridNr[pos];
+  for (let row = 0; row < gridHeight; row++) {
+    for (let column = 0; column < gridWidth; column++) {
+      const element = gridNr[row][column];
 
       const div = document.createElement("div");
       div.className = "grid-item";
       div.textContent = element;
 
-      if (element === currPlayer.character) {
+      if (element === player.character) {
         div.style = "background-color: pink;";
       }
 
@@ -31,30 +30,31 @@ function showGridNr() {
 }
 
 function movePlayer(move) {
-  gridNr[currPlayer.currPositionNr] = "";
+  gridNr[player.posCoordinates[0]][player.posCoordinates[1]] = "";
 
   switch (move) {
     case "u":
-      currPlayer.moveUp();
+      player.moveUp();
       break;
 
     case "r":
-      currPlayer.moveRight();
+      player.moveRight();
       break;
 
     case "d":
-      currPlayer.moveDown();
+      player.moveDown();
       break;
 
     case "l":
-      currPlayer.moveLeft();
+      player.moveLeft();
       break;
 
     default:
       break;
   }
 
-  gridNr[currPlayer.currPositionNr] = currPlayer.character;
+  gridNr[player.posCoordinates[0]][player.posCoordinates[1]] = player.character;
+  showGridNr();
 }
 
 document.addEventListener(
@@ -62,27 +62,29 @@ document.addEventListener(
   function (event) {
     if (event.keyCode === 37) {
       movePlayer("l");
-      showGridNr();
     } else if (event.keyCode === 38) {
       movePlayer("u");
-      showGridNr();
     } else if (event.keyCode === 39) {
       movePlayer("r");
-      showGridNr();
     } else if (event.keyCode === 40) {
       movePlayer("d");
-      showGridNr();
     }
   },
   true
 );
 
 // fill grid
-for (let i = 0; i < gridHeight * gridWidth; i++) {
-  if (i === currPlayer.currPositionNr) {
-    gridNr[i] = currPlayer.character;
-  } else {
-    gridNr[i] = getRandomNumber(0, 9);
+for (let row = 0; row < gridHeight; row++) {
+  gridNr[row] = [];
+  for (let column = 0; column < gridWidth; column++) {
+    if (
+      row === player.posCoordinates[0] &&
+      column === player.posCoordinates[1]
+    ) {
+      gridNr[row][column] = player.character;
+    } else {
+      gridNr[row][column] = getRandomNumber(1, 9);
+    }
   }
 }
 

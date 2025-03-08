@@ -3,13 +3,13 @@ import { getRandomNumber } from "./math.js";
 export class Player {
   height;
   width;
-  currPositionNr;
+  posCoordinates;
   character;
 
   constructor(gridHeight, gridWidth) {
     this.height = gridHeight;
     this.width = gridWidth;
-    this.currPositionNr = this.getPlayerPosition();
+    this.posCoordinates = this.getPlayerPosition();
     this.character = "X";
   }
 
@@ -17,22 +17,33 @@ export class Player {
   // TODO: parameter for how many steps
 
   getPlayerPosition() {
-    return getRandomNumber(0, this.height * this.width - 1);
+    var row = getRandomNumber(0, this.height - 1);
+    var column = getRandomNumber(0, this.width - 1);
+    return [row, column];
   }
 
   moveUp() {
-    this.currPositionNr = this.currPositionNr - this.height;
+    // is not on the edge
+    if (this.posCoordinates[0] !== 0) {
+      this.posCoordinates[0] = this.posCoordinates[0] - 1;
+    }
   }
 
   moveDown() {
-    this.currPositionNr = this.currPositionNr + this.height;
+    if (this.posCoordinates[0] !== this.height - 1) {
+      this.posCoordinates[0] = this.posCoordinates[0] + 1;
+    }
   }
 
   moveLeft() {
-    this.currPositionNr = this.currPositionNr - 1;
+    if (this.posCoordinates[1] !== 0) {
+      this.posCoordinates[1] = this.posCoordinates[1] - 1;
+    }
   }
 
   moveRight() {
-    this.currPositionNr = this.currPositionNr + 1;
+    if (this.posCoordinates[1] !== this.width - 1) {
+      this.posCoordinates[1] = this.posCoordinates[1] + 1;
+    }
   }
 }
