@@ -3,7 +3,7 @@ import { getRandomNumber } from "./math.js";
 
 var gridNr = [];
 const gridWidth = 15;
-const gridHeight = 16;
+const gridHeight = 15;
 
 const currPlayer = new Player(gridHeight, gridWidth);
 
@@ -60,16 +60,16 @@ function movePlayer(move) {
 document.addEventListener(
   "keydown",
   function (event) {
-    if (event.code == 37) {
+    if (event.keyCode === 37) {
       movePlayer("l");
       showGridNr();
-    } else if (event.code == 38) {
+    } else if (event.keyCode === 38) {
       movePlayer("u");
       showGridNr();
-    } else if (event.code == 39) {
+    } else if (event.keyCode === 39) {
       movePlayer("r");
       showGridNr();
-    } else if (event.code == 40) {
+    } else if (event.keyCode === 40) {
       movePlayer("d");
       showGridNr();
     }
